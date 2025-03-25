@@ -120,15 +120,3 @@
   (clean-poly
    (map (λ (term) (remove-trailing-zeros (derx-list term))) poly)))
 
-; Example test cases with expected outputs
-; Test addition
-(poly_add '((1 -1) (1 2 3) () (3)) '((-1 1) (-1 2) (3)))
-; Should output: '(() (0 4 3) (3) (3))
-
-; Test multiplication
-(poly_mul '((1) (1 2 3) () (3)) '((-1) (-1 2) (3)))
-; Should output: '((-1) (-2 0 -3) (2 0 1 6) (0 6 9) (-3 6) (9))
-
-; Test derivative
-(poly_derx '((1) (1 2 3) () (3)))
-; Should output: '(() (2 6))
