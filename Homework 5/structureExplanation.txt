@@ -1,0 +1,74 @@
+Bivariate Polynomial Structure Explanation
+=====================================
+
+The program represents bivariate polynomials (polynomials with variables x and y) using a specific list structure in Racket/Scheme.
+
+Basic Structure
+-------------
+- Polynomials are represented as lists of lists
+- OUTER list: represents terms with increasing powers of y
+- INNER lists: represent coefficients of x terms (in increasing powers of x)
+
+Examples with Explanations
+------------------------
+
+1. Simple Constant:
+   '((1))
+   Represents: 1
+   - Single inner list with one element means just a constant
+
+2. Linear in y:
+   '((2) (3))
+   Represents: 2 + 3y
+   - First inner list (2): constant term
+   - Second inner list (3): coefficient of y¹
+
+3. With x terms:
+   '((1 2) (3 4))
+   Represents: (1 + 2x) + (3 + 4x)y
+   - First inner list (1 2): 1 + 2x
+   - Second inner list (3 4): (3 + 4x)y
+
+4. Complex Example:
+   '((1 -1) (1 2 3) () (3))
+   Represents: (1 - x) + (1 + 2x + 3x²)y + 0y² + 3y³
+   Breakdown:
+   - (1 -1): 1 - x           (constant term, y⁰)
+   - (1 2 3): 1 + 2x + 3x²   (coefficient of y¹)
+   - (): 0                   (coefficient of y²)
+   - (3): 3                  (coefficient of y³)
+
+Important Rules
+-------------
+1. Empty inner list () represents zero
+2. Position in outer list represents power of y
+3. Position in inner list represents power of x
+4. Lists are in increasing power order
+5. Leading zeros should be removed
+
+Test Input Examples
+-----------------
+
+Addition:
+(poly_add '((1 -1) (1 2 3) () (3))     ; First polynomial
+         '((-1 1) (-1 2) (3)))         ; Second polynomial
+
+Multiplication:
+(poly_mul '((1) (1 2 3) () (3))        ; First polynomial
+         '((-1) (-1 2) (3)))           ; Second polynomial
+
+Derivative:
+(poly_derx '((1) (1 2 3) () (3)))      ; Single polynomial input
+
+Mathematical Interpretation
+------------------------
+For '((1 -1) (1 2 3) () (3)):
+
+Term by term:
+y⁰: (1 -1)    → 1 - x
+y¹: (1 2 3)   → 1 + 2x + 3x²
+y²: ()        → 0
+y³: (3)       → 3
+
+Complete polynomial:
+(1 - x) + (1 + 2x + 3x²)y + 0y² + 3y³ 
