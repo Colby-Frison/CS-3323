@@ -1,0 +1,134 @@
+#lang racket
+
+; Bivariate Polynomial Arithmetic Implementation
+; Each polynomial is represented as a list of lists where:
+; - The outer list represents terms with increasing powers of y
+; - Each inner list represents coefficients of x terms
+; - Example: '((1) (2 3)) represents 1 + (2 + 3x)y
+
+; Helper function to add two lists of numbers (polynomials in x)
+; Takes two lists representing polynomials in x and adds them term by term
+; Example: (add-lists '(1 2) '(3 4)) -> '(4 6)
+(define (add-lists l1 l2)
+  (cond
+    [(null? l1) l2]                    ; If first list is empty, return second list
+    [(null? l2) l1]                    ; If second list is empty, return first list
+    [else (cons (+ (car l1) (car l2))  ; Add corresponding terms
+                (add-lists (cdr l1) (cdr l2)))])) 
+
+; Helper function to subtract two lists of numbers
+; Takes two lists representing polynomials in x and subtracts them term by term
+; Example: (sub-lists '(1 2) '(3 4)) -> '(-2 -2)
+(define (sub-lists l1 l2)
+  (cond
+    [(null? l1) (map - l2)]            ; If first list is empty, negate all terms of second list
+    [(null? l2) l1]                    ; If second list is empty, return first list
+    [else (cons (- (car l1) (car l2))  ; Subtract corresponding terms
+                (sub-lists (cdr l1) (cdr l2)))]))
+
+; Helper function to multiply two lists (polynomials in x)
+; Implements polynomial multiplication by distributing terms
+; Example: (mul-lists '(1 2) '(3 4)) -> '(3 10 8)
+(define (mul-lists l1 l2)
+  (cond
+    [(or (null? l1) (null? l2)) '()]   ; If either list is empty, result is empty
+    [else
+     (add-lists
+      (map (λ (x) (* x (car l1))) l2)  ; Multiply first term of l1 with all terms of l2
+      (cons 0 (mul-lists (cdr l1) l2))) ; Recursively multiply rest of l1 with l2, shifted one position
+     ]))
+
+; Helper function to take derivative of a list with respect to x
+; Applies the power rule for derivatives
+; Example: (derx-list '(1 2 3)) -> '(2 6) (derivative of 1 + 2x + 3x²)
+(define (derx-list l)
+  (if (null? l)
+      '()
+      (let ([coeffs (cdr l)])          ; Skip constant term
+        (if (null? coeffs)
+            '()
+            (map * (range 1 (add1 (length coeffs))) coeffs))))) ; Multiply each term by its power
+
+; Helper function to remove trailing zeros
+; Cleans up polynomial representation by removing unnecessary zero coefficients
+; Example: (remove-trailing-zeros '(1 2 0 0)) -> '(1 2)
+(define (remove-trailing-zeros lst)
+  (let loop ([l lst])
+    (if (or (null? l) (not (zero? (last l))))  ; Stop if list is empty or last element is non-zero
+        l
+        (loop (drop-right l 1)))))             ; Remove last element if it's zero
+
+; Helper function to clean empty or zero polynomials
+; Removes empty lists from the end of polynomial representation
+; Example: (clean-poly '((1 2) () () ())) -> '((1 2))
+(define (clean-poly poly)
+  (let ([cleaned (dropf-right poly null?)])     ; Remove trailing empty lists
+    (if (null? cleaned)
+        '()
+        cleaned)))
+
+; Main function for polynomial addition
+; Adds two bivariate polynomials term by term
+; Example: (poly_add '((1) (2)) '((3) (4))) -> '((4) (6))
+(define (poly_add p1 p2)
+  (clean-poly
+   (let loop ([a p1] [b p2])
+     (cond
+       [(null? a) b]                    ; If first polynomial is empty, return second
+       [(null? b) a]                    ; If second polynomial is empty, return first
+       [else
+        (cons (remove-trailing-zeros (add-lists (car a) (car b)))  ; Add corresponding y-terms
+              (loop (cdr a) (cdr b)))]))))
+
+; Main function for polynomial subtraction
+; Subtracts second polynomial from first
+; Example: (poly_sub '((1) (2)) '((3) (4))) -> '((-2) (-2))
+(define (poly_sub p1 p2)
+  (clean-poly
+   (let loop ([a p1] [b p2])
+     (cond
+       [(null? a) (map (λ (x) (map - x)) b)]   ; If first poly empty, negate second poly
+       [(null? b) a]                           ; If second poly empty, return first
+       [else
+        (cons (remove-trailing-zeros (sub-lists (car a) (car b)))  ; Subtract corresponding y-terms
+              (loop (cdr a) (cdr b)))]))))
+
+; Main function for polynomial multiplication
+; Multiplies two bivariate polynomials using the distributive property
+; Example: (poly_mul '((1) (1)) '((1) (1))) -> '((1) (2) (1))  ; (1 + y)(1 + y) = 1 + 2y + y²
+(define (poly_mul p1 p2)
+  ; Helper function to shift polynomial terms by adding empty lists at start
+  ; Used to handle different powers of y when multiplying
+  (define (shift-poly p n)
+    (append (make-list n '()) p))
+  
+  (clean-poly
+   (foldl (λ (term1 acc)
+            (clean-poly
+             (poly_add acc
+                      (let ([pos (- (length p1) (length (member term1 p1)))])  ; Calculate y power
+                        (shift-poly
+                         (map (λ (term2) (remove-trailing-zeros (mul-lists term1 term2))) p2)
+                         pos)))))
+          '()
+          p1)))
+
+; Main function for partial derivative with respect to x
+; Takes derivative of each x-polynomial coefficient
+; Example: (poly_derx '((1 1) (2 2))) -> '((1) (2))  ; d/dx(1 + x + (2 + 2x)y) = 1 + 2y
+(define (poly_derx poly)
+  (clean-poly
+   (map (λ (term) (remove-trailing-zeros (derx-list term))) poly)))
+
+; Example test cases with expected outputs
+; Test addition
+(poly_add '((1 -1) (1 2 3) () (3)) '((-1 1) (-1 2) (3)))
+; Should output: '(() (0 4 3) (3) (3))
+
+; Test multiplication
+(poly_mul '((1) (1 2 3) () (3)) '((-1) (-1 2) (3)))
+; Should output: '((-1) (-2 0 -3) (2 0 1 6) (0 6 9) (-3 6) (9))
+
+; Test derivative
+(poly_derx '((1) (1 2 3) () (3)))
+; Should output: '(() (2 6))
