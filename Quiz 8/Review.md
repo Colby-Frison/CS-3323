@@ -61,6 +61,38 @@
 (map add1 '(1 2 3))     ; Applies function: (2 3 4)
 ```
 
+## Common Higher-Order Functions
+
+```scheme
+; map: Apply function to each element
+(map (lambda (x) (* x 2)) '(1 2 3))  ; (2 4 6)
+
+; filter: Keep elements that satisfy predicate
+(filter even? '(1 2 3 4))  ; (2 4)
+
+; foldl: Accumulate from left to right
+(foldl + 0 '(1 2 3))  ; 6
+
+; foldr: Accumulate from right to left
+(foldr cons '() '(1 2 3))  ; (1 2 3)
+```
+
+## Eager vs Lazy Evaluation
+
+### Eager Evaluation (Application Order)
+- The default evaluation strategy in most programming languages
+- Expressions are evaluated immediately when encountered
+- Example: `(+ 1 2)` is evaluated right away to `3`
+- Pros: Simpler to understand, predictable behavior
+- Cons: May perform unnecessary computations, cannot handle infinite data structures
+
+### Lazy Evaluation (Normal Order)
+- Expressions are only evaluated when their values are actually needed
+- Implemented in Racket using `delay` and `force`
+- Example: Infinite streams can be created and processed one element at a time
+- Pros: Can handle infinite data structures, avoids unnecessary computations
+- Cons: More complex to reason about, may have unexpected memory usage
+
 ## Lazy Evaluation
 
 Lazy evaluation is a strategy where expressions are evaluated only when their values are needed. In Scheme/Racket, this is primarily implemented using `delay` and `force`.
@@ -153,20 +185,4 @@ A function is tail recursive if:
         a
         (fib-iter (- n 1) b (+ a b))))
   (fib-iter n 0 1))
-```
-
-## Common Higher-Order Functions
-
-```scheme
-; map: Apply function to each element
-(map (lambda (x) (* x 2)) '(1 2 3))  ; (2 4 6)
-
-; filter: Keep elements that satisfy predicate
-(filter even? '(1 2 3 4))  ; (2 4)
-
-; foldl: Accumulate from left to right
-(foldl + 0 '(1 2 3))  ; 6
-
-; foldr: Accumulate from right to left
-(foldr cons '() '(1 2 3))  ; (1 2 3)
 ```

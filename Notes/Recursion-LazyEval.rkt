@@ -31,6 +31,17 @@
     )
 )
 
+;; trail recursion
+(define (TR_addone l)
+    (letrec
+        ((helper (lambda (result l)
+            (if (null? l)
+                result
+                (helper (append result (list (+ (car l) 1))) (cdr l))))))
+        (helper '() l)
+    )
+)
+
 ;??
 (define (svadd l1 l2)
     (if (null? l1)
@@ -89,3 +100,5 @@
         (next 1)
     )
 )
+
+(TR_addone '(5 7 8))

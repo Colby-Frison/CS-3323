@@ -1,10 +1,10 @@
 #lang racket
 
-; Bivariate Polynomial Arithmetic Implementation
-; Each polynomial is represented as a list of lists where:
-; - The outer list represents terms with increasing powers of y
-; - Each inner list represents coefficients of x terms
-; - Example: '((1) (2 3)) represents 1 + (2 + 3x)y
+; Name: Colby Frison
+; Date: 3/31/2025
+; Assignment: Homework 5
+; Class: CS 3323
+
 
 ; Helper function to add two lists of numbers (polynomials in x)
 ; Takes two lists representing polynomials in x and adds them term by term
@@ -34,7 +34,7 @@
     [(or (null? l1) (null? l2)) '()]   ; If either list is empty, result is empty
     [else
      (add-lists
-      (map (λ (x) (* x (car l1))) l2)  ; Multiply first term of l1 with all terms of l2
+      (map (lambda (x) (* x (car l1))) l2)  ; Multiply first term of l1 with all terms of l2
       (cons 0 (mul-lists (cdr l1) l2))) ; Recursively multiply rest of l1 with l2, shifted one position
      ]))
 
@@ -87,7 +87,7 @@
   (clean-poly
    (let loop ([a p1] [b p2])
      (cond
-       [(null? a) (map (λ (x) (map - x)) b)]   ; If first poly empty, negate second poly
+       [(null? a) (map (lambda (x) (map - x)) b)]   ; If first poly empty, negate second poly
        [(null? b) a]                           ; If second poly empty, return first
        [else
         (cons (remove-trailing-zeros (sub-lists (car a) (car b)))  ; Subtract corresponding y-terms
@@ -97,19 +97,20 @@
 ; Multiplies two bivariate polynomials using the distributive property
 ; Example: (poly_mul '((1) (1)) '((1) (1))) -> '((1) (2) (1))  ; (1 + y)(1 + y) = 1 + 2y + y²
 (define (poly_mul p1 p2)
-  ; Helper function to shift polynomial terms by adding empty lists at start
-  ; Used to handle different powers of y when multiplying
   (define (shift-poly p n)
     (append (make-list n '()) p))
   
+  (define (multiply-terms t1 t2)
+    (remove-trailing-zeros (mul-lists t1 t2)))
+  
+  (define (multiply-with-shift term1 p2 shift)
+    (shift-poly (map (lambda (term2) (multiply-terms term1 term2)) p2) shift))
+  
   (clean-poly
-   (foldl (λ (term1 acc)
-            (clean-poly
-             (poly_add acc
-                      (let ([pos (- (length p1) (length (member term1 p1)))])  ; Calculate y power
-                        (shift-poly
-                         (map (λ (term2) (remove-trailing-zeros (mul-lists term1 term2))) p2)
-                         pos)))))
+   (foldl (lambda (term1 acc)
+            (let ([pos (- (length p1) (length (member term1 p1)))])
+              (clean-poly
+               (poly_add acc (multiply-with-shift term1 p2 pos)))))
           '()
           p1)))
 
@@ -118,4 +119,4 @@
 ; Example: (poly_derx '((1 1) (2 2))) -> '((1) (2))  ; d/dx(1 + x + (2 + 2x)y) = 1 + 2y
 (define (poly_derx poly)
   (clean-poly
-   (map (λ (term) (remove-trailing-zeros (derx-list term))) poly)))
+   (map (lambda (term) (remove-trailing-zeros (derx-list term))) poly)))
