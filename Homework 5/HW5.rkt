@@ -53,10 +53,14 @@
 ; Cleans up polynomial representation by removing unnecessary zero coefficients
 ; Example: (remove-trailing-zeros '(1 2 0 0)) -> '(1 2)
 (define (remove-trailing-zeros lst)
-  (let loop ([l lst])
-    (if (or (null? l) (not (zero? (last l))))  ; Stop if list is empty or last element is non-zero
-        l
-        (loop (drop-right l 1)))))             ; Remove last element if it's zero
+  (cond
+    [(null? lst) '()]
+    [(null? (cdr lst)) (if (zero? (car lst)) '() lst)]
+    [else
+     (let ([rest (remove-trailing-zeros (cdr lst))])
+       (if (and (zero? (car lst)) (null? rest))
+           '()
+           (cons (car lst) rest)))]))
 
 ; Helper function to clean empty or zero polynomials
 ; Removes empty lists from the end of polynomial representation
@@ -72,33 +76,33 @@
 ; Example: (poly_add '((1) (2)) '((3) (4))) -> '((4) (6))
 (define (poly_add p1 p2)
   (clean-poly
-   (let loop ([a p1] [b p2])
-     (cond
-       [(null? a) b]                    ; If first polynomial is empty, return second
-       [(null? b) a]                    ; If second polynomial is empty, return first
-       [else
-        (cons (remove-trailing-zeros (add-lists (car a) (car b)))  ; Add corresponding y-terms
-              (loop (cdr a) (cdr b)))]))))
+   (cond
+     [(null? p1) p2]                    ; If first polynomial is empty, return second
+     [(null? p2) p1]                    ; If second polynomial is empty, return first
+     [else
+      (cons (remove-trailing-zeros (add-lists (car p1) (car p2)))  ; Add corresponding y-terms
+            (poly_add (cdr p1) (cdr p2)))])))
 
 ; Main function for polynomial subtraction
 ; Subtracts second polynomial from first
 ; Example: (poly_sub '((1) (2)) '((3) (4))) -> '((-2) (-2))
 (define (poly_sub p1 p2)
   (clean-poly
-   (let loop ([a p1] [b p2])
-     (cond
-       [(null? a) (map (lambda (x) (map - x)) b)]   ; If first poly empty, negate second poly
-       [(null? b) a]                           ; If second poly empty, return first
-       [else
-        (cons (remove-trailing-zeros (sub-lists (car a) (car b)))  ; Subtract corresponding y-terms
-              (loop (cdr a) (cdr b)))]))))
+   (cond
+     [(null? p1) (map (lambda (x) (map - x)) p2)]   ; If first poly empty, negate second poly
+     [(null? p2) p1]                           ; If second poly empty, return first
+     [else
+      (cons (remove-trailing-zeros (sub-lists (car p1) (car p2)))  ; Subtract corresponding y-terms
+            (poly_sub (cdr p1) (cdr p2)))])))
 
 ; Main function for polynomial multiplication
 ; Multiplies two bivariate polynomials using the distributive property
 ; Example: (poly_mul '((1) (1)) '((1) (1))) -> '((1) (2) (1))  ; (1 + y)(1 + y) = 1 + 2y + y²
 (define (poly_mul p1 p2)
   (define (shift-poly p n)
-    (append (make-list n '()) p))
+    (if (zero? n)
+        p
+        (cons '() (shift-poly p (- n 1)))))
   
   (define (multiply-terms t1 t2)
     (remove-trailing-zeros (mul-lists t1 t2)))
@@ -106,13 +110,15 @@
   (define (multiply-with-shift term1 p2 shift)
     (shift-poly (map (lambda (term2) (multiply-terms term1 term2)) p2) shift))
   
-  (clean-poly
-   (foldl (lambda (term1 acc)
-            (let ([pos (- (length p1) (length (member term1 p1)))])
-              (clean-poly
-               (poly_add acc (multiply-with-shift term1 p2 pos)))))
-          '()
-          p1)))
+  (define (multiply-terms-rec p1 p2 shift)
+    (if (null? p1)
+        '()
+        (clean-poly
+         (poly_add
+          (multiply-with-shift (car p1) p2 shift)
+          (multiply-terms-rec (cdr p1) p2 (+ shift 1))))))
+  
+  (clean-poly (multiply-terms-rec p1 p2 0)))
 
 ; Main function for partial derivative with respect to x
 ; Takes derivative of each x-polynomial coefficient
@@ -295,9 +301,9 @@
 (printf "Expected: '((4 8) (17 16 12) (15 18))\n")
 (printf "Mathematical: (1 + 2x + 3y)(4 + (5 + 6x)y) = 4 + 8x + (17 + 16x + 12x²)y + (15 + 18x)y²\n\n")
 
-(printf "Test 5: (poly_mul '((1) (2 3)) '((4 5) (6))) = ~a\n" (poly_mul '((1) (2 3)) '((4 5) (6))))
-(printf "Expected: '((4 5) (14 22 15) (12 18))\n")
-(printf "Mathematical: (1 + (2 + 3x)y)((4 + 5x) + 6y) = (4 + 5x) + (14 + 22x + 15x²)y + (12 + 18x)y²\n\n")
+(printf "Test 5: (poly_mul '((1 2) (3)) '((4 5) (6))) = ~a\n" (poly_mul '((1 2) (3)) '((4 5) (6))))
+(printf "Expected: '((4 13 10) (18 27) (18))\n")
+(printf "Mathematical: (1 + 2x + 3y)((4 + 5x) + 6y) = (4 + 13x + 10x2) + (18y + 27xy) + (18y2)\n\n")
 
 (printf "Testing poly_derx:\n")
 (printf "Test 1: (poly_derx '((1 1) (2 2))) = ~a\n" (poly_derx '((1 1) (2 2))))
