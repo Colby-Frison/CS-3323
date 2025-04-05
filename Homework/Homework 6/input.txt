@@ -1,0 +1,5 @@
+112000001 Chris Carson 90 L Bowling Green Kentucky 112000000
+Ben Christie 50 L Chicago IL 112000002 Bern
+Cruz 80 L TX 113000000 Donald Cantor 85 E
+113000001 Ted Sanders 90 E AR 113000002 Carly Fiorina 98 L
+113000003 Hillary Trent 50 E NY
