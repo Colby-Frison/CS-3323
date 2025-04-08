@@ -181,12 +181,17 @@ def createGradeReport(studentsWithGrades):
             margin: 0;
             padding: 20px;
             background-color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 600px;
+            width: 100%;
+            margin: 20px auto;
             background-color: white;
-            padding: 20px;
+            padding: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
@@ -194,6 +199,7 @@ def createGradeReport(studentsWithGrades):
             color: #2c3e50;
             text-align: center;
             margin-bottom: 30px;
+            font-size: 1.8em;
         }
         table {
             width: 100%;
@@ -212,6 +218,7 @@ def createGradeReport(studentsWithGrades):
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            font-size: 0.9em;
         }
         tr:nth-child(even) {
             background-color: #f8f9fa;
@@ -229,17 +236,21 @@ def createGradeReport(studentsWithGrades):
         .grade-F { color: #e74c3c; font-weight: bold; }
         .metadata-box {
             margin-top: 30px;
-            padding: 15px;
+            padding: 20px;
+            background-color: #f8f9fa;
             border-radius: 4px;
         }
         .metadata-box p {
             margin: 5px 0;
             color: #2c3e50;
-            font-size: 1em;
+            font-size: 0.9em;
+            line-height: 1.4;
         }
         .metadata-box .label {
             font-weight: 600;
             color: #3498db;
+            display: inline-block;
+            width: 80px;
         }
     </style>
 </head>
