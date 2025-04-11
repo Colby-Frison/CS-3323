@@ -5,44 +5,32 @@ import re
 # Date: 4/8/2025
 # Course: CS 3323
 # Assignment: Homework 6
-
-# Description: This program processes student records from input.txt, calculates grades based on
-#              specific rules, and generates an HTML table displaying the results. The grading
-#              system assigns A's to the top third, B's to the middle third, F's to the bottom
-#              10%, and C's/D's to the remaining students based on their eagerness level.
-
+# Description: Processes student records, calculates grades, and generates an HTML report.
+#              Grades are assigned as follows: A (top 1/3), B (middle 1/3), F (bottom 10%),
+#              C/D (remaining students based on eagerness).
 
 def getStudentData():
     """
-    Reads and returns the contents of input.txt.
-    
-    This function attempts to locate and read the input file containing student records.
-    It first checks the Homework/Homework 6 directory, then falls back to the current
-    directory if the file is not found. This ensures the program can find the input
-    file regardless of where it is run from.
-    
+    Reads input.txt from either the Homework directory or current directory.
+    Returns the file contents or raises FileNotFoundError if not found.
     """
     # First attempt: Look in the Homework/Homework 6 directory
     try:
-        with open('Homework/Homework 6/input.txt', 'r') as file:
+        with open('input.txt', 'r') as file:
             return file.read()
     except FileNotFoundError:
         # Second attempt: Look in the current directory
         try:
-            with open('input.txt', 'r') as file:
+            print("Using direct path for testing")
+            with open('Homework/Homework 6/input.txt', 'r') as file:
                 return file.read()
         except FileNotFoundError:
-            raise FileNotFoundError("Could not find input.txt in Homework/Homework 6 directory or current directory")
+            raise FileNotFoundError("Could not find input.txt in the directory")
 
 def extractStudentInfo(rawData):
     """
-    Parses the raw input content into structured student records.
-    
-    This function processes the input string to extract individual student records.
-    Each record contains: ID number, first name, last name, score, and eagerness level.
-    The function handles records that may span multiple lines and cleans up any extra
-    whitespace or newlines in the input.
-    
+    Parses raw input into structured student records.
+    Each record contains: ID, first name, last name, score, and eagerness level.
     """
     # Clean up the input by removing extra spaces and newlines
     cleanData = ' '.join(rawData.split())
@@ -76,12 +64,8 @@ def extractStudentInfo(rawData):
 
 def addStudentToList(studentParts, studentList):
     """
-    Processes a single student record from its component parts.
-    
-    This helper function takes the raw parts of a student record and extracts
-    the relevant information: ID, names, score, and eagerness level. It handles
-    the parsing of names and ensures all required fields are present.
-
+    Processes a single student record into a structured dictionary.
+    Extracts ID, names, score, and eagerness level from the input parts.
     """
     # The first part is always the 9-digit ID number
     studentId = studentParts[0]
@@ -115,14 +99,11 @@ def addStudentToList(studentParts, studentList):
 
 def assignGrades(studentRecords):
     """
-    Calculates letter grades for all students based on the specified rules.
-    
-    The grading rules are:
-    1. Top n/3 students receive grade A
-    2. Next n/3 students receive grade B
-    3. Bottom n/10 students receive grade F
-    4. Remaining students receive grade C if eager, D if lazy
-    
+    Assigns grades based on ranking and eagerness:
+    - Top n/3: A
+    - Next n/3: B
+    - Bottom 10%: F
+    - Remaining: C (eager) or D (lazy)
     """
     totalStudents = len(studentRecords)
     if totalStudents < 7:
@@ -155,11 +136,9 @@ def assignGrades(studentRecords):
 
 def createGradeReport(studentsWithGrades):
     """
-    Generates an HTML table displaying student records and their grades.
-    
-    Creates a well-formatted HTML table with student information sorted by
-    last name, first name, and ID number. Includes modern CSS styling for
-    a professional presentation.
+    Generates an HTML report with two tables:
+    1. Final grades sorted alphabetically
+    2. Raw data including scores and eagerness levels
     """
     # Lambda function explanation:
     # key=lambda student: (student['lastName'], student['firstName'], student['id'])
@@ -175,7 +154,7 @@ def createGradeReport(studentsWithGrades):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Grades Report</title>
     <style>
-        /* Modern styling for the table */
+        /* Base styling for the entire page */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -186,8 +165,10 @@ def createGradeReport(studentsWithGrades):
             justify-content: center;
             align-items: flex-start;
         }
+        
+        /* Container for all content*/
         .container {
-            max-width: 600px;
+            max-width: 800px;
             width: 100%;
             margin: 20px auto;
             background-color: white;
@@ -195,12 +176,23 @@ def createGradeReport(studentsWithGrades):
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        h1 {
+        
+        /* Headings styling*/
+        h1, h2 {
             color: #2c3e50;
             text-align: center;
             margin-bottom: 30px;
+        }
+        h1 {
             font-size: 1.8em;
         }
+        h2 {
+            font-size: 1.4em;
+            margin-top: 40px;
+            color: #3498db;
+        }
+        
+        /* Table styling */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -229,33 +221,84 @@ def createGradeReport(studentsWithGrades):
         td {
             color: #2c3e50;
         }
-        .grade-A { color: #27ae60; font-weight: bold; }
-        .grade-B { color: #2980b9; font-weight: bold; }
-        .grade-C { color: #f39c12; font-weight: bold; }
-        .grade-D { color: #e67e22; font-weight: bold; }
-        .grade-F { color: #e74c3c; font-weight: bold; }
+        
+        /* Grade-specific colors for visual feedback */
+        .grade-A { color: #27ae60; font-weight: bold; }  /* Green for A */
+        .grade-B { color: #2980b9; font-weight: bold; }  /* Blue for B */
+        .grade-C { color: #f39c12; font-weight: bold; }  /* Orange for C */
+        .grade-D { color: #e67e22; font-weight: bold; }  /* Dark Orange for D */
+        .grade-F { color: #e74c3c; font-weight: bold; }  /* Red for F */
+        
+        /* Score column styling */
+        .score {
+            text-align: right;
+            font-family: monospace;
+        }
+        
+        /* Eagerness level styling */
+        .eagerness-E {
+            color: #27ae60;  /* Green for Eager */
+            font-weight: bold;
+        }
+        .eagerness-L {
+            color: #e74c3c;  /* Red for Lazy */
+            font-weight: bold;
+        }
+        
+        /* info box styling */
         .metadata-box {
-            margin-top: 30px;
-            padding: 20px;
             background-color: #f8f9fa;
-            border-radius: 4px;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .metadata-box h3 {
+            color: #3498db;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.2em;
         }
         .metadata-box p {
-            margin: 5px 0;
+            margin: 8px 0;
             color: #2c3e50;
-            font-size: 0.9em;
-            line-height: 1.4;
+            font-size: 0.95em;
+            line-height: 1.5;
+            text-align: center;
         }
         .metadata-box .label {
             font-weight: 600;
             color: #3498db;
             display: inline-block;
-            width: 80px;
+            width: 100px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        .metadata-box .value {
+            text-align: left;
+            display: inline-block;
+            min-width: 150px;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- metadata section at the top -->
+        <div class="metadata-box">
+            <p><span class="label">Name:</span><span class="value">Colby Frison</span></p>
+            <p><span class="label">OUID:</span><span class="value">113568816</span></p>
+            <p><span class="label">Date:</span><span class="value">4/8/2025</span></p>
+            <p><span class="label">Course:</span><span class="value">CS 3323</span></p>
+            <p><span class="label">Assignment:</span><span class="value">Homework 6</span></p>
+        </div>
+        
+        <!-- Main grades table -->
         <h1>Student Grades Report</h1>
         <table>
             <tr>
@@ -277,15 +320,33 @@ def createGradeReport(studentsWithGrades):
             </tr>
 """
     
-    # Add metadata box
+    # Add raw data table
     htmlPage += """        </table>
-        <div class="metadata-box">
-            <p><span class="label">Name:</span> Colby Frison</p>
-            <p><span class="label">OUID:</span> 113568816</p>
-            <p><span class="label">Date:</span> 4/8/2025</p>
-            <p><span class="label">Course:</span> CS 3323</p>
-            <p><span class="label">Assignment:</span> Homework 6</p>
-        </div>
+        <h2>Raw Student Data</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Score</th>
+                <th>Eagerness</th>
+            </tr>
+"""
+    
+    # Add raw data for each student
+    for student in sortedStudents:
+        eagernessClass = f"eagerness-{student['eagerness']}"
+        htmlPage += f"""            <tr>
+                <td>{student['id']}</td>
+                <td>{student['firstName']}</td>
+                <td>{student['lastName']}</td>
+                <td class="score">{student['score']}</td>
+                <td class="{eagernessClass}">{student['eagerness']}</td>
+            </tr>
+"""
+    
+    # Close the HTML document
+    htmlPage += """        </table>
     </div>
 </body>
 </html>"""
@@ -294,7 +355,7 @@ def createGradeReport(studentsWithGrades):
 
 def main():
     """
-    Main function that orchestrates the entire grade processing workflow.
+    Main function that combines all the functions to process the entire grade processing workflow.
     
     This function:
     1. Reads the input file
@@ -302,9 +363,7 @@ def main():
     3. Calculates grades
     4. Generates the HTML output
     5. Saves the results to output.html
-    
-    Handles any errors that might occur during the process and provides
-    appropriate error messages.
+
     """
     try:
         # Read and process the input file

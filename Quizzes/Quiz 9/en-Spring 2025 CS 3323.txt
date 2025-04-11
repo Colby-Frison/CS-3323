@@ -1,0 +1,205 @@
+The. Hello. Very good. Good afternoon. We have been
+working on Python programming. I think for Python? These people probably a little though, and now Python because computers especially for machine learning, for AI allython log everybody feels that Python very
+easy to learn very to learn. When you see learn and the Python piece Sscriptive language. So remember that there are you
+can do three things very well. One is that text screw shing, which would be this project on text scsing. As you can use regular expression just
+in case you forgot that we did before, you want to use regular expression, pens on regular expression
+pack, you can do that here, which will make your program much
+much better so you don't do that. The blue extension. Blue and extension. This project basically says that
+a professor has gone in class of students is definitely bigger than six or bigger or equal seven
+more than seven students. At the end of semester, you need to assign a letter grade ADC
+B and F. Each student in the class, hopefully nobody get F.
+But according to her rule, probably somebody has to get F, right? So she has been working with a law they file for input sequence of students records. And issue sum I did followed
+by the first name, last name, and the final overall score 0-1
+inclusive and the letter D, which basically me for ethic
+participants in class. So that's something we have to be concerned about
+whether it's a big here. So and also optionally optionally, this could be the students
+who CD who and who. And sometimes there's information
+about the student's CD, who CD or who did. Sometimes there's no such thing. So So Russell, you got to remember that
+one line we have been there because a file it's not not complex. So essentially by the placement program to clean up clean up the file clean up the file. And the So one line could contain many records and one
+record straight over many lines. And there could be 59 in between. It could be that there is a
+line between separate record. Makes sense for this part? She's
+going to use the following rules. Is read and who will be
+ruled by both below that, if two students have the same score, let's both in five is bigger? Who is going ahead of that? Who is going to read, is behind. Who will have a better rate? The leads, even they have seen score. Yes. Years ago. Yes. Yes. It's really behind that. If you are you students, you may have some issue in
+the c but since you are you. Now you actually not behind. In this course, all the students here, we are certainly very vigorous
+vigor vigorance here. They are eager students. Absolutely. So the student going from one to
+over three, this is function. You worried about flooring and then what would be the number. If over three, you are not going
+to get each floor you get. Basically in her class, how many students are going to get an eight? To students are going to
+get two students get a. When you from this number to this
+number would receive the letters. About a third of class will have a and about another third the entire these you have a B student really important ten
+and here you take seal seal. If a seven, then how many that is how many. 7/10, that would be 0.7, but then you get? If she has seven students, then how many students going to get F. That would be one, one. Com if they said, how many will have left? We're downs in one, but what about students? Two. If students than two will get back. Okay. So for other students, you can see if they are
+eager eererz they are lazy, whether you can see what is going to solely depend on whether
+you are eager or lazy. What do you think about this strategy? Good strategy, bad strategy, good strategy. Okay. You were like a professor
+get like that, right? Like that. Okay. So what would be the strategy? All we really. Do you think it is the best idea. Everyone get that means 89, you are the student no longer
+everyone get not here today. So don't get that. You have to some students, especially if they are lazy. In this project, you need to get
+a Python program the professor. Op should be to be into
+a more structured style. In this case would be a TML because
+I assume you words TML very well. Do you know how to use a
+TML to guide the table? If you do not, therefore,
+the computer science. All right. Okay. I'm also E. We want Excel's your data easily becomes priorities for
+Microsoft, which you don't. We want you to p text print text
+will be something much better, and you want all your data in plaintext
+because you print Think about that, if you have a very important
+idea that you put in a reward format Then maybe 100 years
+from now we know what your ideas. That's that because you
+hand it from new work. Soft work. That's why the p textile using
+platform that will make sure that that's on all the soft code that you
+can make all of these and stuff. You can deploy, you can
+do animation and using. But in this case, we just
+want to do HTML HTML. You can make the following assumption that the first type will always be broken by ings. That means there is for any of the
+integer at most two value in the score. If both have a five, then you can assume that
+is bigger, one is limited. To the assumption that students have the same floor
+or they have different leads, there will be no three
+students have things floor. We go to a number of the work will be seeing. Some of them are lazy, we want to. Next. Do you think that eagerness
+is the binary thing or more like a pre thing,
+especially for students. Some students have very very, but most of them are most of
+them are taken separately. Okay. Number is nine and there's
+no duplicate ID numbers. Is that true for your ID number? Nine. Your ID number always starts from 11. You may also assume that the file
+is in your current directory, so you assume in your current directory, so you don't have to go other
+directory to search for firearm? We will put some bars in your PSD. You do that. Also, you need to submit that your son code for
+the text file path is probably just by number of means dog. Following the space. Make sense? Yeah. You should not input any
+module except also RU. What is the Python module RE? RE means what? R means regular expression. You can use Python regular
+expression function, which is going to help you to
+write much more precise code. In order to help you refresh your memory in regular expressions regular expressions
+because we find regular expression. But if you do not use them, that's a fine in the middle Okay. And then I have a few examples here. For example, we have the
+following the first record, the students have ID 112-00-0001 and his name is Chris Carson City. It would be Bing Bowling Green. Bowing Green City really? It is sure. It's like Oklahoma City, Oklahoma. If people ask me where you live, you live in Oklahoma Avenue,
+Oklahoma City, Oklahoma. All right. Nobody can miss Bowling Green, Kentucky, I will be, that will be the home city and home state. Then you have this B Christie burn cruise. So you can see that se to line of black
+in the little child, it could be. Producing would be something like this. You can see that the w and hearing. They both have 50, but one
+is bigger, one is lazy, then The hetering will have C and then will have that. Remember the kind broken by eagerness, hence the hearing will have, but then doesn't hinge of CI. But remember how CI depend on egrance. And that's why that's why
+interview would have a C, B would have X. So basically, this is, again, an example that we use Python
+to do text processing, and that is a strong strength
+of a description language. They can manipulate text very well
+because we can do regular expression, we can do regular expression and then. Any question here for your Python project? Okay. It appears that this
+project is just too easy for you. Then there's some students who
+says maybe just line code. If you use, you should be able to do it. This again show that the Then you can even maybe do a mental
+experiment like that. What if you want to use
+C to the City problem? You can try to use C to do the Cp. That would be Cp of course C you can
+definitely use C to solve this problem, but it would be really more. No more your code. Okay. Very good, very good. No questions. So let's
+continue to talk about Python. Where is where is my ex? No. I'm going to kill my ex. Okay. Okay. So last time for the Python, we talked a little bit
+about the basic stuff like lift green in the list string, remember, in Python string is
+actually immutable once you have three listable assignment in the list. And then you can define function. You can define function not just
+by you can do like of course, define certainly do the function like Lambda. So I think at all. As we talked about the
+case picking localized. If you define function and you assign
+to a variable dagger will become a. That means the dagger will not accept outside the scope of outside the scope of that. Probably many people think that that would be the better approach to
+take care of side effect. And probably if you try to
+delineate all the side effects, That becoming a field. What you should be doing is just lobize. Whenever you can change the value of a variable and not variable
+automatically become a local variable. If you really want to change the
+value of your global variable, then you have to do what? You have to do global. You have to use few global. But Is it a good idea to use loss
+of goals? Never a good idea. Google variable Logal variable. Why Google variable is bad. That side effect on global
+verb is very hard to over. That really very hard to
+investigate for having the glalver. But if you look at all the side
+effect all the time disease puning those side effect you need to give up any of the side effects. So And also, we know that we know that
+the function is if you define a function, the code inside the function is because at the definition time
+we will drop only function, then you run time. But for class, things are different. For class, suppose again, let's do let's do X is maybe let's do X's Let's do taxes. And suppose you do a
+class and you do a class. You do a class, let's do A, and for your class A, let's see that now that
+you're going to say that let's do X equal to Colorado. Let me do X equal to maybe W pipe. I think there's some
+problem with indentation. So what happens? I have to kill my ex. I think my keyboard there's some
+problem with my keyboard. Still here. Let me do one more window. Now, let me do this. I removed my computer. Okay. This seems okay. You Okay. Let's be a little bit more careful. Again, let's do the same thing. X. And let's do class A. Let's do X, Oklahoma, maybe Oklahoma make them
+a little happier, right? I think not like Colorado. Whenever I take Colorado, it has problems. So at this point at this point, ask what is Easy to text or easy. Well, remember that this course eager. The class is more eager, which means it has code, it has run this code. But when you ask what x is, the X is actually one. X is what we to be S taxes. But we know that the
+class is actually bigger. That means that con line to Y X taxes. Well, the problem is here is that
+the X is actually inside the class. So you want you have to do AX. What is AX A X would be would be Oklahoma. A X would be Oklahoma. Basically, that means that it's right. The value of X has been changing, but it's just in the scope of A. X is without this home
+pare then that global X, global X is Oklahoma, but global X is Texas, but X X one. Is Oklahoma. Now in the names, there are two. One is global, other Also change. You don't need to wait.
+You don't need to wait. This axis is called glass variable. But what if you try to make an object? What if you try to make an object? Well, you can do similar thing, you can say the class A, and you can say, X is going to be, let's say, Oklahoma problem. You can define. Of course, you have to have solve,
+remember that's important. You could define a function which
+initialize an object initialize object. Initialize the object
+inside here, you can do X. Let's see. Well we know
+Colorado have problem. Let's dossus. Here we again have X, let's say X in. Okay. So now you ask you asked
+what is what is what is AX? What is the AX? What is the evals? Well, EvalX used to be a homo c
+here you have a val X to be cases. If you ask what is EvalX at this point, you see that this product zero Why? Because this function does not have
+an idea you define a function, it will not be run unless you correct. At this point, if you can see
+that this X is actually working. This here Oklahoma. This data X is here Oklahoma. And of course, the global X would still
+be the global X still be Texas Texas. But what if you really want you really
+want to have this random initial function? Well, you can do like this object one, you said that you're going to do A. So you said, object one going to be 01 is going to be eight here
+that you actually run that code, you actually run that code. Because remember that when you
+use your variable and we run, you run line initialize
+the object which is which. V What is do you still have
+now you have a pressure. So you have three X because you have all X, which It change your login
+because electrons Xs. You also X, a, voice Kansas. You global X, what will be your global X? Well, global X will still be's Your global X is
+impact. That's for sure. But what about eight of X? Of X between X. This is very important, is very
+important because you narrow X. Now we have this visualization comes
+about X system and then insualization, you actually immediately has the X depends. Now, when do eight of X has a vision. Well, the Python tells you
+that it's still Oklahoma. Russ I don't think it has changed that. Maybe we just the way enter is
+already assigned to the Oklahoma. This actually become
+Oklahoma that's interesting. It looks like you have not changed
+this class variable Oklahoma. The time initializing the trans. Well, what the really
+need to set up is because that inside inituizX that is actually
+localized fun once you've done fun is gone, once you've done it's gone. X is kind of it's gone. So how do you? How do you? How do you? Because you
+want you want to change outside X to be canceled you initialize. Once you initialize that. What Python says is what you
+can do is you can basically do. Now I have to do this. And So this is the critical thing is that
+you have to put a self self. If you need a self dot X, if you don't cons, then the X is not an object net. So you will not have any effect. All the sudden is gone after do. But once you const X over there, then Then you can see, X is still Kansas, if you initialize it, initialize to be a, a dot X will become C Oklahoma, but now you have basically dot X. You have an X and dot X in this case, would be the Kansas will be the an F, without the dot X, if you have one X here Oklahoma
+dot X will be here Oklahoma. So this kind of like a scope, P on scope. Very interesting. Very interesting. That it before you run function, if you ask one, one would be. You want to make that X
+become an objective variable. You have to use itself is take away. Very good. This is Scoop
+rule about this thing. Well, the days many testing
+of volume Scoopi rule. The class variable, the object
+variable, all kind of thing, and then glue over and you know the
+difference between those things. For example, you can see
+that if you can delete do. If you delete dot X, now if you ask what is one dot X, one dot x would be one. The use the dependent? Because the initial identity I, Oklahoma, I. So if you ask you want. Is the error like Texas it is Oklahoma. Error. Not error only Texas or Oklahoma. Oklahoma Oklahoma. Okay. Very good. Very good. Okay. This is Oklahoma, right? So we delete But now we are with X. Used to have this object X, but we did. Lo scope is that if there's no factor, you lose scope, what do you do? Well the bigger scope. For one, what would be the bigger scope? Well, the bigger scope would be
+the scope of A because of what? Because, because A is a class that one
+belong to the one belongs to. Okay. So you can essentially have
+a picture like this, right? Python scope. So Pythonsope very important
+Pythonsope in our previous example, you see that there is X globally. So this is the whole Python limb space. And then there is a class we call C, and the class have an
+object which is Y, right? So the C have X C has an X? So here you have X, which is a global variable, and here you have a X, which is a class variable, and you also have X, which is object variable
+variable now you got three X. And so now you create one
+X now if you are world X, because if you did the world
+X, this one will be me. So we ask X will be this one. That's why this one, this X is going to be this, right? You know this is, you just want
+to see balance you would laugh. You will not go to global global
+because of what? Because of what? Because Python because this
+is the idea of Python, Python want to do what Python want to leave. The Python do not want to get rid of. The python wants to do. So very important examples. Okay, you're going to see
+this type of problem. You delete X at this point? Can you delete at this point? Well, let's see. Everyone has to say. Well, you got error. Why? Because even though there's a class. But now, you said is rather, let's see, Ohio. Okay. In this case, if you ask what is dot X you create an X because you delete X. Now you sign Ox. Now if you ask what is OX, of course, it would be O but if you ask what is CX? What is class What is tax? Ca zero will be one will be. What is our class name? Oh, sorry. Ex would still be So the person
+give you license flexibility. So you can have your clock variable, you can have your object variable. You can even delete your
+object variable after you initialize what do you do? Then if you ask variable if you
+cannot find a variable in your local, it's going to go to the class. So for example, if you have your, okay. 02. If you have oh two going to be, let's do another eight. So now you have object one on 02, you need that object two. The question become very interesting
+because what would be your 02 lines? What would be your two? You deleted but then it becomes a. What are your two lines? Well, your ox is actually
+very easy to see what? Because when you run this function
+when you run 02 is A versus this, then the auto for. Out XX because Those X will be kinds. Now, the picture you have would
+be like this would be like this. That you have your C and you have your 02, and then you have your 02, oh two also have X. You two also have X. And you can delete. So basically the in Python is just all the variable is you really need
+once you assign any value to a variable, you got to know what is the
+scope for that variable, whether it is a class variable or
+whether it is an object variable and this is something that Power, very different from C. Very
+different from C. Okay. Okay. So let's so we're
+going to we're going to use like Now we're going to write a write a program, and this is just a toy example. For example. Now let's write a program. The first one is a very good example that
+you write a function that you return this current that you pick
+X and actually return a function and pick Y and this kind
+of function will be important. Let's do a class. Let's do a university. Let's do a university class. Let's think about what would be the cluster? Well, maybe the university
+should have a purpose. What do you think about the purpose
+for a university in general? Yes. Learning. Basically education. Let's do learning. Now you can initiate a university
+and remember you have, and of course, for university, what are the important
+thing about the university? Well, the university has to have a
+name a name what is the name for you? University and the University
+of Rose should have one. University of Rose should have a location location of the
+purpose would be a university, but the name should not be the university
+because different university name, even though they both have the same purpose. A new and you have different
+names it's the lane should be objector than cor rather than class. P. The University should have what? It should have a president. You should have a president. I need to fix my keyboard. My keyboard, I usually map my text to the controls for every keyboard, the first thing I need a
+somehow it become become cat's everything I need to control the texts. Very hard to use now. I don't know what happens on
+the other hand, Microsoft. I explain anything anything. So the university got to
+have a link to have link. So you class CCC's what I have. Third name would be link. And it's Russ got to have a location. What's happened? Hopefully, the file is still there. Recover this file. Let's do this. Recover this file. Recover this file. Yes. Okay. It still there. Okay. Very good. You got to be very careful. So university have a location
+location and university have what? The University got to have
+a president. What happened? Recover this file, recover recover this file. Yes, something's wrong. No problem. I guess is
+because of the same, save it. Is it because of the theme, maybe I should not use this theme. Should rather use this maybe better. You can see wesualize the university. But we can also define what can also define the function for the
+universities for the universities. We can define functions for the university. For example, For example, what would be let's define a learn function. Define learn function is good. How do you know a university is good or bad? How do you know a university is good or bad? Of course it's good. You got to be you got to be what. You got to also got to yourself? So you want to know whether
+a university is good or bad. How do you know the
+university is good or bad? Let's just mixing interest. You're going to return here you're
+going to return for initialization, you don't need to return
+because it's going to be, but here you got the return value
+and you got to return value. You got to return value. So we can just return sell the location
+in order to be a good university, you got to locate where space. Well, you got to locate in In normal. Everybody's know that if
+you locate Otherwise, we're good Oklahoma State. Even though they are thick lane is great. S. Sounds very good, again because they are located
+in normal That'sction. Now what do we do? Why are
+we going to run the code? We're going to run the code.
+We're going to run the code. Go to be peeled. Okay. Okay. I got you. Okay. Very good, very good. So what do we do is that again, this is remember that this is a dragon is
+that you send the code to that window. This is the I'm adding my
+source code in this window. This window is the top of the window, and this one is the virtual window. You want to add any data case. And so I don't have to. Okay. So for example, you can do OU is what? It's a university. Did I send a repel? And what is the name? My name would be U of U of Oklahoma. And what is the U? My location would be Norman. And who would be our president? Who is our president? Okay. So this one. Okay. Very good. So university
+has not been defined. So it means what? Means we have not sent that code, right? No we send. But then it
+says we have a problem. What problem? Well, because
+we want to do the comparison, but this is the assignment. How do you do the comparison
+rather than do assignment? Double. That's good. We do this. Now let's send to save. Now let's send to the code. Now it's fine. Great. Now we can do what
+we can do We can do this. We can do this because we
+already send the university to our rep window. The law is fine. If you ask OU, what is OU do name? That would be in what is OU do
+location and what is OU do president? Everything is fine. Is OU good? Two of us? No. So you've got to be true to be. This is how you define
+how you define cluster. Now how we utilize the class
+variable and what is OU dot purpose? What is OU dot purpose? What is OU dot purpose? Well, there's no variable. There's no loophole variable variable. So looking for that purpose? What? Problems will be according to this Learning will we learn learning. This is how Python o scope. You got to remember the objects Python class object class variable
+for the of the variable, and you can delete them
+and you can add them it. The question is quite flexible. But however, you know that
+philosophy behind all this is that the scope you should use scope set. Any questions? Well, I think today I
+have my keyboard problem, so need a bit of issues, but new question. On Thursday we do what? Quiz, yes. I see some students
+who is excited about this. Quiz question. I'm going to have this
+kind of code and asking that question. I give you the code and I says, I what will be the output will be the output. Okay. Any question? Well, no question then see you. Is all you're expecting in the HTML output
