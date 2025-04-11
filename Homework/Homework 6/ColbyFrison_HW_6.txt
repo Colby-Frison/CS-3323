@@ -19,13 +19,14 @@ def getStudentData():
         with open('input.txt', 'r') as file:
             return file.read()
     except FileNotFoundError:
+        print("File not found in main directory \n")
         # Second attempt: Look in the current directory
         try:
-            print("Using direct path for testing")
+            print("Using direct path from testing")
             with open('Homework/Homework 6/input.txt', 'r') as file:
                 return file.read()
         except FileNotFoundError:
-            raise FileNotFoundError("Could not find input.txt in the directory")
+            raise FileNotFoundError("Could not find input.txt in either directory")
 
 def extractStudentInfo(rawData):
     """
