@@ -3,4 +3,10 @@ Ben Christie 50 L Chicago IL 112000002 Bern
 
 Cruz 80 L TX 113000000 Donald Cantor 85 E
 113000001 Ted Sanders 90 E AR 113000002 Carly Fiorina 98 L
-113000003 Hillary Trent 50 E NY
+113000003 Hillary Trent 50 E NY 113000004 John Smith 95 E CA
+113000005 Emily Davis 75 E WA 113000006 Michael Brown 60 L OR
+113000007 Sarah Wilson 88 E NV 113000008 James Taylor 72 L AZ
+113000009 Olivia Martinez 82 E NM 113000010 William Anderson 65 L CO
+113000011 Sophia Garcia 78 E UT 113000012 Daniel Thompson 55 L ID
+113000013 Ava Robinson 92 E MT 113000014 Matthew White 70 L WY
+113000015 Isabella Lee 85 E ND 113000016 Andrew Harris 68 L SD
