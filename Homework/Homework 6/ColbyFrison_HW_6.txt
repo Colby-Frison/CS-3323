@@ -20,13 +20,19 @@ def getStudentData():
             return file.read()
     except FileNotFoundError:
         print("File not found in main directory \n")
+
         # Second attempt: Look in the current directory
+        path = input("Please enter the path to the input.txt file: ")
         try:
-            print("Using direct path from testing")
-            with open('Homework/Homework 6/input.txt', 'r') as file:
+            with open(path, 'r') as file:
                 return file.read()
-        except FileNotFoundError:
-            raise FileNotFoundError("Could not find input.txt in either directory")
+        except:
+            try:
+                path += "/input.txt"
+                with open(path, 'r') as file:
+                        return file.read()
+            except FileNotFoundError:
+                raise FileNotFoundError("Could not find input.txt in either directory")
 
 def extractStudentInfo(rawData):
     """
@@ -378,12 +384,7 @@ def main():
         gradeReport = createGradeReport(gradedStudents)
         
         # Save the output file
-        try:
-            with open('Homework/Homework 6/output.html', 'w') as file:
-                file.write(gradeReport)
-        except:
-            # Fallback to current directory if needed
-            with open('output.html', 'w') as file:
+        with open('output.html', 'w') as file:
                 file.write(gradeReport)
             
         print("Successfully generated output.html")
