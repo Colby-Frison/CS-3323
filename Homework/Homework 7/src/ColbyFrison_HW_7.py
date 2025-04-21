@@ -1,127 +1,187 @@
-def is_prime(n):
-    """Check if a number is prime."""
-    # Basic cases - negative numbers, 0, and 1 are not prime
+"""
+Name: Colby Frison
+OUID: 113568816
+Date: 4/21/2025
+Class: CS3323
+Assignment: Homework 7
+
+This program implements generators to find SuPrP2 numbers - integers that can be 
+written as a sum of a prime and a power of 2.
+"""
+
+# ===== Section handling the is_prime functions =====
+
+def isPrime(n):
+    """
+    This is the same is_prime function from class
+    It does exactly what it says it does, checks if a number is prime.
+    
+    Args:
+        n (int): The number to check for primality
+    
+    Returns:
+        bool: True if the number is prime, False otherwise
+    """
+
+    # First check the base case
     if n <= 1:
         return False
-    # 2 and 3 are prime numbers
-    if n <= 3:
-        return True
-    # Quick check for divisibility by 2 or 3
-    # This helps us skip a lot of numbers in our loop below
-    if n % 2 == 0 or n % 3 == 0:
-        return False
     
-    # Check for divisibility using the 6k±1 optimization
-    # Instead of checking all numbers, we only check numbers of form 6k±1
-    # since all primes > 3 can be expressed in this form
-    i = 5
-    while i * i <= n:  # Only need to check up to sqrt(n)
-        if n % i == 0 or n % (i + 2) == 0:
+    # Start checking divisibility from i=2
+    i = 2
+    
+    # Only need to check up to square root of n
+    while i * i <= n:
+        # If n is divisible by any number, it's not prime
+        if n % i == 0:
             return False
-        i += 6  # Skip to next numbers of form 6k±1
+        # Check the next number
+        i += 1
+    
+    # If no divisors found, n is prime
     return True
 
-def power_of_two_generator():
-    """Generator that yields all powers of two starting from 2^0 = 1."""
-    # Start with 2^0 = 1
-    power = 0
-    while True:
-        # Yield the current power of 2 and increment the exponent
-        yield 2 ** power
-        power += 1
 
-def suprp2_generator(n):
+# ===== Section handling the power of two generator =====
+
+def powerOfTwoGenerator():
+    """
+    Generator that yields all powers of two starting from 2^0
+    
+    This is once again from class, but in class it was called lazySq()
+    
+    Yields:
+        int: The next power of 2 in the sequence
+    """
+    # Start with exponent 0 (2^0 = 1)
+    exponent = 0
+    
+    # Yield powers of 2 indefinitely
+    while True:
+        yield 2 ** exponent
+        exponent += 1
+
+
+# ===== Section handling the SuPrP2 number generator =====
+
+def suprp2Generator(n):
     """
     Generator that yields all SuPrP2 numbers greater than n in increasing order.
-    SuPrP2 numbers are numbers that can be written as a sum of a prime and a power of 2.
     
-    Returns a tuple of (suprp2_number, prime_component, power_of_two, power_exponent)
+    A SuPrP2 number is an integer that can be written as the sum of a prime and
+    a power of 2. This generator follows the pattern from our class notes on
+    creating generators that filter values based on a condition.
+    
+    Args:
+        n (int or str): The starting number (exclusive)
+    
+    Yields:
+        tuple: (suprp2Number, primeComponent, powerOfTwo, powerExponent)
     """
-    # Create a list to store powers of 2 to avoid recomputing them
-    # This is much faster than calculating them each time
-    powers_of_two = []
-    power_gen = power_of_two_generator()
+    # Make sure n is an integer for arithmetic operations
+    n = int(n)
     
-    # Start from the smallest number greater than n
-    current = n + 1
+    # Create a list to store powers of 2 (memoization technique)
+    powersOfTwo = []
+    powerGen = powerOfTwoGenerator()
+    
+    # Start checking numbers after n
+    currentNum = n + 1
     
     # Keep generating SuPrP2 numbers indefinitely
     while True:
-        # Track if the current number is a SuPrP2
-        is_suprp2 = False
-        found_prime = None
-        found_power = None
-        found_exponent = None
+        # Initialize variables for the current number
+        isSuPrP2 = False
+        foundPrime = None
+        foundPower = None
+        foundExponent = None
         
-        # Make sure we have enough powers of 2 available to check
-        # We only need powers up to the current number we're checking
-        while len(powers_of_two) == 0 or powers_of_two[-1] < current:
-            powers_of_two.append(next(power_gen))
+        # Ensure we have enough powers of 2 to check
+        while len(powersOfTwo) == 0 or powersOfTwo[-1] < currentNum:
+            powersOfTwo.append(next(powerGen))
         
-        # For each power of 2 less than current, check if (current - power) is prime
-        # If it is, then current is a SuPrP2 number
-        for i, power in enumerate(powers_of_two):
-            # No need to check powers >= current (would give negative or zero result)
-            if power >= current:
+        # Check if current number can be expressed as prime + power of 2
+        for idx, power in enumerate(powersOfTwo):
+            # Skip powers that are too large
+            if power >= currentNum:
                 break
             
-            # Calculate the potential prime component
-            potential_prime = current - power
-            if is_prime(potential_prime):
-                # Found a valid decomposition as prime + power of 2
-                is_suprp2 = True
-                found_prime = potential_prime
-                found_power = power
-                found_exponent = i
-                break  # Use the first decomposition we find
+            # Check if (current - power) is prime
+            potentialPrime = currentNum - power
+            if isPrime(potentialPrime):
+                # Found a valid decomposition
+                isSuPrP2 = True
+                foundPrime = potentialPrime
+                foundPower = power
+                foundExponent = idx
+                break
         
-        # If we found a valid SuPrP2 number, yield it with its decomposition
-        if is_suprp2:
-            yield (current, found_prime, found_power, found_exponent)
+        # Yield the SuPrP2 number and its components if found
+        if isSuPrP2:
+            # 4-tuple of the SuPrP2 number, the prime component, the power of two, and the exponent
+            # This makes the output look nice and explains the components of the SuPrP2 number
+            yield (currentNum, foundPrime, foundPower, foundExponent)
         
-        # Move to the next number to check
-        current += 1
+        # Move to the next number
+        currentNum += 1
 
-# My student ID number - this is what we'll use as our starting point
-STUDENT_ID = "113510621"
 
-# Problem 3: Find 20 consecutive SuPrP2 numbers right after my student ID
-# Create a generator for SuPrP2 numbers starting after my ID
-suprp2_gen = suprp2_generator(STUDENT_ID)
+# ===== Section handling the main program and output =====
 
-# Get the first 20 SuPrP2 numbers
+# random number used for the student ID
+studentID = "93802475"
+
+# Demonstrate Problem 1: Generator for powers of two
+print("\nPROBLEM 1: Powers of Two Generator")
+print("First few powers of two:")
+p2Gen = powerOfTwoGenerator()
+for i in range(5):
+    print(f"2^{i} = {next(p2Gen)}")
+
+# Demonstrate Problem 2: Generator for SuPrP2 numbers
+print("\nPROBLEM 2: SuPrP2 Numbers Generator")
+print("First few SuPrP2 numbers greater than 10:")
+sp2Gen = suprp2Generator(10)
+for i in range(5):
+    result = next(sp2Gen)
+    print(f"{result[0]} = {result[1]} + 2^{result[3]} (prime + {result[2]})")
+
+# Solve Problem 3: Find 20 consecutive SuPrP2 numbers after student ID
+print("\nPROBLEM 3: SuPrP2 Numbers After Student ID")
+print(f"20 consecutive SuPrP2 numbers right after {studentID}:")
+
+# Use our generator to find the SuPrP2 numbers
+sp2Gen = suprp2Generator(studentID)
 results = []
-for _ in range(20):
-    result = next(suprp2_gen)
-    results.append(result)
 
-# Display the 20 consecutive SuPrP2 numbers with their decompositions
-print(f"20 consecutive SuPrP2 numbers right after {STUDENT_ID}:")
-for suprp2, prime, power, exponent in results:
+# Collect 20 SuPrP2 numbers
+for _ in range(20):
+    result = next(sp2Gen)
+    results.append(result)
+    suprp2, prime, power, exponent = result
     print(f"{suprp2} = {prime} + 2^{exponent} (prime + {power})")
 
 # Results for question 3 - adding these as comments in the source code
-# (This is the answer to be submitted)
 """
-20 consecutive SuPrP2 numbers right after 113510621:
-113510625 = 113510609 + 2^4 (prime + 16)
-113510627 = 113509603 + 2^10 (prime + 1024)
-113510631 = 113510599 + 2^5 (prime + 32)
-113510633 = 113509609 + 2^10 (prime + 1024)
-113510635 = 113510603 + 2^5 (prime + 32)
-113510637 = 113508589 + 2^11 (prime + 2048)
-113510639 = 113445103 + 2^16 (prime + 65536)
-113510641 = 113510609 + 2^5 (prime + 32)
-113510643 = 113509619 + 2^10 (prime + 1024)
-113510645 = 113248501 + 2^18 (prime + 262144)
-113510647 = 113510519 + 2^7 (prime + 128)
-113510649 = 113510521 + 2^7 (prime + 128)
-113510651 = 113510587 + 2^6 (prime + 64)
-113510653 = 113510141 + 2^9 (prime + 512)
-113510654 = 113510653 + 2^0 (prime + 1)
-113510655 = 113510653 + 2^1 (prime + 2)
-113510657 = 113510653 + 2^2 (prime + 4)
-113510659 = 105122051 + 2^23 (prime + 8388608)
-113510660 = 113510659 + 2^0 (prime + 1)
-113510661 = 113510659 + 2^1 (prime + 2)
+93802477 = 93802469 + 2^3 (prime + 8)
+93802478 = 93802477 + 2^0 (prime + 1)
+93802479 = 93802477 + 2^1 (prime + 2)
+93802481 = 93802477 + 2^2 (prime + 4)
+93802483 = 93794291 + 2^13 (prime + 8192)
+93802484 = 93802483 + 2^0 (prime + 1)
+93802485 = 93802483 + 2^1 (prime + 2)
+93802487 = 93802483 + 2^2 (prime + 4)
+93802489 = 93801977 + 2^9 (prime + 512)
+93802491 = 93802483 + 2^3 (prime + 8)
+93802493 = 93802477 + 2^4 (prime + 16)
+93802495 = 93802463 + 2^5 (prime + 32)
+93802497 = 93802433 + 2^6 (prime + 64)
+93802499 = 93802483 + 2^4 (prime + 16)
+93802501 = 93802469 + 2^5 (prime + 32)
+93802503 = 93801991 + 2^9 (prime + 512)
+93802507 = 93800459 + 2^11 (prime + 2048)
+93802509 = 93802477 + 2^5 (prime + 32)
+93802511 = 93540367 + 2^18 (prime + 262144)
+93802513 = 93671441 + 2^17 (prime + 131072)
 """
+
