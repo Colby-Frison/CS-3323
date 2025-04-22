@@ -75,7 +75,7 @@ def addStudentToList(studentParts, studentList):
     Extracts ID, names, score, and eagerness level from the input parts.
     """
     # The first part is always the 9-digit ID number
-    studentId = studentParts[0]
+    ID = studentParts[0]
     
     # Find where the score is (first number after the names)
     scorePosition = 0
@@ -97,7 +97,7 @@ def addStudentToList(studentParts, studentList):
     
     # Create and add the student's record
     studentList.append({
-        'id': studentId,
+        'id': ID,
         'firstName': firstName,
         'lastName': lastName,
         'score': finalScore,

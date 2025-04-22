@@ -1,54 +1,50 @@
-"""
-Name: Colby Frison
-OUID: 113568816
-Date: 4/21/2025
-Class: CS3323
-Assignment: Homework 7
+# Name: Colby Frison
+# OUID: 113568816
+# Date: 4/21/2025
+# Class: CS3323
+# Assignment: Homework 7
+# Description: This program implements generators to find SuPrP2(sum of prime and power of 2) numbers
 
-This program implements generators to find SuPrP2 numbers - integers that can be 
-written as a sum of a prime and a power of 2.
-"""
-
-# ===== Section handling the is_prime functions =====
-
+# is prime function
 def isPrime(n):
     """
-    This is the same is_prime function from class
-    It does exactly what it says it does, checks if a number is prime.
+    Similar to the isPrime function from class, but with some additional
+    optimizations, like using the property that all primes greater than 
+    3 are of the form 6k +/- 1 to reduce the number of checks.
     
     Args:
-        n (int): The number to check for primality
+        n (int): num to check if prime
     
     Returns:
-        bool: True if the number is prime, False otherwise
+        bool: True if the num is prime, False otherwise
     """
-
-    # First check the base case
+    # First check the base case and small primes
     if n <= 1:
         return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
     
-    # Start checking divisibility from i=2
-    i = 2
-    
-    # Only need to check up to square root of n
+    # Check divisibility using 6k +- 1 optimization
+    # This is more efficient than checking all numbers up to sqrt(n)
+    i = 5
     while i * i <= n:
-        # If n is divisible by any number, it's not prime
-        if n % i == 0:
+        if n % i == 0 or n % (i + 2) == 0:
             return False
-        # Check the next number
-        i += 1
+        i += 6
     
     # If no divisors found, n is prime
     return True
 
 
-# ===== Section handling the power of two generator =====
-
+# power of two generator
 def powerOfTwoGenerator():
     """
     Generator that yields all powers of two starting from 2^0
     
-    This is once again from class, but in class it was called lazySq()
+    This is pretty much just the function from class, but in 
+    class it was called lazySq()
     
     Yields:
         int: The next power of 2 in the sequence
@@ -62,45 +58,54 @@ def powerOfTwoGenerator():
         exponent += 1
 
 
-# ===== Section handling the SuPrP2 number generator =====
-
+# SuPrP2 num generator
 def suprp2Generator(n):
     """
     Generator that yields all SuPrP2 numbers greater than n in increasing order.
     
-    A SuPrP2 number is an integer that can be written as the sum of a prime and
+    A SuPrP2 num is an integer that can be written as the sum of a prime and
     a power of 2. This generator follows the pattern from our class notes on
     creating generators that filter values based on a condition.
     
     Args:
-        n (int or str): The starting number (exclusive)
+        n (int or str): The starting num
     
     Yields:
         tuple: (suprp2Number, primeComponent, powerOfTwo, powerExponent)
+
+    I could just return the number, but I have it returning the tuple so I can have the output with the components
     """
-    # Make sure n is an integer for arithmetic operations
+    # Make sure n is an int
     n = int(n)
     
-    # Create a list to store powers of 2 (memoization technique)
+    # Create a list to store powers of 2
     powersOfTwo = []
+
+    # Create the generator for powers of 2
     powerGen = powerOfTwoGenerator()
     
     # Start checking numbers after n
     currentNum = n + 1
     
+    # Create a hashmap for caching prime check results
+    # This prevents re-checking the same num to see if prime
+    # and considering the size of numbers we are checking, its 
+    # kind of a necessary addition
+    primeCache = {}
+    
     # Keep generating SuPrP2 numbers indefinitely
     while True:
-        # Initialize variables for the current number
-        isSuPrP2 = False
-        foundPrime = None
-        foundPower = None
-        foundExponent = None
+        # Initialize variables for the current num
+        isSuPrP2 = False # bool to check if the current num is a SuPrP2
+        prime = None # prime component
+        power = None # power of two component
+        exponent = None # exponent of the power of two
         
         # Ensure we have enough powers of 2 to check
         while len(powersOfTwo) == 0 or powersOfTwo[-1] < currentNum:
             powersOfTwo.append(next(powerGen))
         
-        # Check if current number can be expressed as prime + power of 2
+        # Check if current num can be expressed as prime + power of 2
         for idx, power in enumerate(powersOfTwo):
             # Skip powers that are too large
             if power >= currentNum:
@@ -108,50 +113,56 @@ def suprp2Generator(n):
             
             # Check if (current - power) is prime
             potentialPrime = currentNum - power
-            if isPrime(potentialPrime):
+            
+            # if num were checking isn't in the cache, check if its prime
+            if potentialPrime not in primeCache:
+                primeCache[potentialPrime] = isPrime(potentialPrime)
+            
+            # refresh the cache to see if the num is prime
+            if primeCache[potentialPrime]:
                 # Found a valid decomposition
                 isSuPrP2 = True
-                foundPrime = potentialPrime
-                foundPower = power
-                foundExponent = idx
+                prime = potentialPrime
+                power = power
+                exponent = idx
                 break
         
-        # Yield the SuPrP2 number and its components if found
+        # Yield the SuPrP2 num and its components if found
         if isSuPrP2:
-            # 4-tuple of the SuPrP2 number, the prime component, the power of two, and the exponent
-            # This makes the output look nice and explains the components of the SuPrP2 number
-            yield (currentNum, foundPrime, foundPower, foundExponent)
+            # 4-tuple of the SuPrP2 num, the prime component, the power of two, and the exponent
+            # This makes the output look nice and explains the components of the SuPrP2 num
+            yield (currentNum, prime, power, exponent)
         
-        # Move to the next number
+        # Move to the next num
         currentNum += 1
 
 
-# ===== Section handling the main program and output =====
+#  Main section 
 
-# random number used for the student ID
-studentID = "113568816"
+# my student ID
+ID = "113568816"
 
-# Demonstrate Problem 1: Generator for powers of two
-print("\nPROBLEM 1: Powers of Two Generator")
+# 1. Powers of two generator
+print("\nProblem 1: Powers of Two Generator")
 print("First few powers of two:")
 p2Gen = powerOfTwoGenerator()
 for i in range(5):
     print(f"2^{i} = {next(p2Gen)}")
 
-# Demonstrate Problem 2: Generator for SuPrP2 numbers
-print("\nPROBLEM 2: SuPrP2 Numbers Generator")
+# 2. SuPrP2 num generator
+print("\nProblem 2: SuPrP2 Numbers Generator")
 print("First few SuPrP2 numbers greater than 10:")
 sp2Gen = suprp2Generator(10)
 for i in range(5):
     result = next(sp2Gen)
     print(f"{result[0]} = {result[1]} + 2^{result[3]} (prime + {result[2]})")
 
-# Solve Problem 3: Find 20 consecutive SuPrP2 numbers after student ID
-print("\nPROBLEM 3: SuPrP2 Numbers After Student ID")
-print(f"20 consecutive SuPrP2 numbers right after {studentID}:")
+
+# 3. SuPrP2 gen but 20 after student ID
+print("\nProblem 3: 20 SuPrP2 Numbers After Student ID")
 
 # Use our generator to find the SuPrP2 numbers
-sp2Gen = suprp2Generator(studentID)
+sp2Gen = suprp2Generator(ID)
 results = []
 
 # Collect 20 SuPrP2 numbers
@@ -160,6 +171,8 @@ for _ in range(20):
     results.append(result)
     suprp2, prime, power, exponent = result
     print(f"{suprp2} = {prime} + 2^{exponent} (prime + {power})")
+
+
 
 # Results for question 3 - adding these as comments in the source code
 """
@@ -184,4 +197,3 @@ for _ in range(20):
 113568854 = 113568853 + 2^0 (prime + 1)
 113568855 = 113568853 + 2^1 (prime + 2)
 """
-
