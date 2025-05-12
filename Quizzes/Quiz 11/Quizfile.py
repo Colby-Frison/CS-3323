@@ -33,8 +33,7 @@ def sofcu():
         yield total
         i += 1
 
-for i in sofcu():
-    if i < 1000:
-        print(i)
-    else:
-        break
+gen = sofcu()
+
+for i in range(3):
+    print(next(gen))

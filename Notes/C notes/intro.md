@@ -358,3 +358,6 @@ int main() {
 - Remember: getting 7 in this example is luck, not guaranteed behavior
     - so in a practical  assessment the result would be undefined not a tangible answer
 
+
+3 functional 2 python 2 C
+
