@@ -1,7 +1,6 @@
 import re
 
 # Name: Colby Frison
-# OUID: 113568816
 # Date: 4/8/2025
 # Course: CS 3323
 # Assignment: Homework 6
@@ -299,7 +298,6 @@ def createGradeReport(studentsWithGrades):
         <!-- metadata section at the top -->
         <div class="metadata-box">
             <p><span class="label">Name:</span><span class="value">Colby Frison</span></p>
-            <p><span class="label">OUID:</span><span class="value">113568816</span></p>
             <p><span class="label">Date:</span><span class="value">4/8/2025</span></p>
             <p><span class="label">Course:</span><span class="value">CS 3323</span></p>
             <p><span class="label">Assignment:</span><span class="value">Homework 6</span></p>
