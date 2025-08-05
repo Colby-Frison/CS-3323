@@ -1,6 +1,6 @@
 # CS-3323 Course Materials
 
-This repository contains all of my course materials for CS-3323 (Principles of Programming Languages) at the University of Oklahoma, Spring 2025. It’s intended as a resource for anyone taking this class in the future - use it to study, review, and get a sense of what to expect!
+This repository contains all of my course materials for CS-3323 (Principles of Programming Languages) taught by Dr. Qi Cheng at the University of Oklahoma in the Spring 2025 semester. It’s intended as a resource for anyone taking this class in the future - use it to study, review, and get a sense of what to expect!
 
 ---
 
